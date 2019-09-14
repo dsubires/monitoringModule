@@ -1,0 +1,369 @@
+{
+	"info": {
+		"_postman_id": "d15afc05-7ad2-4c0a-a913-a0f388d06a23",
+		"name": "TFG Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "pushbullet",
+			"item": [
+				{
+					"name": "getUser",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "YOUR_TOKEN_HERE",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.pushbullet.com/v2/users/me",
+							"protocol": "https",
+							"host": [
+								"api",
+								"pushbullet",
+								"com"
+							],
+							"path": [
+								"v2",
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "push",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Token",
+								"value": "YOUR-TOKEN-HERE",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"type\" : \"note\",\n\t\"title\" : \"Alerta temperatura\",\n\t\"body\" : \"Esta es una alerta de prueba generada mediante POSTMAN\"\n}"
+						},
+						"url": {
+							"raw": "https://api.pushbullet.com/v2/pushes",
+							"protocol": "https",
+							"host": [
+								"api",
+								"pushbullet",
+								"com"
+							],
+							"path": [
+								"v2",
+								"pushes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sensorUpdateELK",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "sensor",
+							"value": "Baria",
+							"type": "text"
+						},
+						{
+							"key": "data",
+							"value": "44",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.1.168/sensorupdateELK.php",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"168"
+					],
+					"path": [
+						"sensorupdateELK.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sensorUpdateELK insecure",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "sensor",
+							"value": "Baria",
+							"type": "text"
+						},
+						{
+							"key": "data",
+							"value": "44",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://192.168.1.168/sensorupdateELKinsecure.php",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"168"
+					],
+					"path": [
+						"sensorupdateELKinsecure.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "elk: get all documents (max.default = 10k)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"from\" : 0, \"size\" : 10000,\r\n    \"query\": {\r\n        \"match_all\": {}\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "192.168.1.168:9200/device_status/_search?pretty",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"168"
+					],
+					"port": "9200",
+					"path": [
+						"device_status",
+						"_search"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "elk: delete all documents ",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": {\r\n        \"match_all\": {}\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "192.168.1.168:9200/data_preprocessing/_delete_by_query",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"168"
+					],
+					"port": "9200",
+					"path": [
+						"data_preprocessing",
+						"_delete_by_query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "elk: insert all documents",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"index\" : { \"_index\" : \"test\" }\r\n{ \"device\" : \"value3\", \"timestamp\" : \"value3\", \"temperature\" : \"value3\" }\r\n{ \"index\" : { \"_index\" : \"test\" }\r\n{ \"device\" : \"value3\", \"timestamp\" : \"value3\", \"temperature\" : \"value3\" }\r\n{ \"index\" : { \"_index\" : \"test\" }\r\n{ \"device\" : \"value3\", \"timestamp\" : \"value3\", \"temperature\" : \"value3\" }\r\n{ \"index\" : { \"_index\" : \"test\" }\r\n{ \"device\" : \"value3\", \"timestamp\" : \"value3\", \"temperature\" : \"value3\" }\r\n{ \"index\" : { \"_index\" : \"test\" }\r\n{ \"device\" : \"value3\", \"timestamp\" : \"value3\", \"temperature\" : \"value3\" }\r\n"
+				},
+				"url": {
+					"raw": "192.168.1.168:9200/_bulk",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"168"
+					],
+					"port": "9200",
+					"path": [
+						"_bulk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mesh: send deviceStatus to ELK",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"device\" : \"Postman\",\n\t\"temperature\" : 33\n}"
+				},
+				"url": {
+					"raw": "http://192.168.1.169:8080/mesh/update",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"169"
+					],
+					"port": "8080",
+					"path": [
+						"mesh",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mesh: send deviceStatus to ELK [authcode]",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n\t\"authcode\" : \"XXXXXXXXXXX\",\n\t\"deviceStatus\" : {\n  \t  \"device\" : \"Postman authcode\",\n\t  \"temperature\" : 33\n    }\n}"
+				},
+				"url": {
+					"raw": "http://192.168.1.169:8080/mesh/forward",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"169"
+					],
+					"port": "8080",
+					"path": [
+						"mesh",
+						"forward"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get admin login page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.1.168/simplesaml/module.php/core/authenticate.php?as=admin",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"1",
+						"168"
+					],
+					"path": [
+						"simplesaml",
+						"module.php",
+						"core",
+						"authenticate.php"
+					],
+					"query": [
+						{
+							"key": "as",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
